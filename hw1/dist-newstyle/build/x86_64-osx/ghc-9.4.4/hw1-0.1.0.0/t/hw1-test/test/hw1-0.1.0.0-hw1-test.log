@@ -1,0 +1,13 @@
+Test suite hw1-test: RUNNING...
+All Tests
+  Unit Tests
+    zipLong with equal length lists:  OK
+    zipLong with shorter first list:  OK
+    zipLong with shorter second list: OK
+    zipLong with empty first list:    OK
+  zipLong property:                   OK (0.01s)
+      ✓ <interactive> passed 100 tests.
+
+All 5 tests passed (0.01s)
+Test suite hw1-test: PASS
+Test suite logged to: /Users/r.tyapkina/Repositories/haskell/homeworks/hw1/dist-newstyle/build/x86_64-osx/ghc-9.4.4/hw1-0.1.0.0/t/hw1-test/test/hw1-0.1.0.0-hw1-test.log
