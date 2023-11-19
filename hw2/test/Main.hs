@@ -47,10 +47,7 @@ isCorrect (Node ml v mr) = maybe True isCorrect ml &&
   all (<v) (maybe [] traversal ml) &&
   all (>=v) (maybe [] traversal mr)
 
--- Поменять генератор двоичных деревьев поиска так,
--- чтобы задавался диапазон элементов дерева и
--- в левом и в правом поддереве генерировались только
--- нужные элементы (чтобы BST было корректным)
+
 arbitraryTree :: Size -> Gen (Tree Int)
 arbitraryTree 0 = pure empty
 arbitraryTree size = do
@@ -67,6 +64,34 @@ arbitraryTree size = do
 
 treeGen :: Gen (Tree Int)
 treeGen = Gen.sized arbitraryTree
+
+-- Поменять генератор двоичных деревьев поиска так,
+-- чтобы задавался диапазон элементов дерева и
+-- в левом и в правом поддереве генерировались только
+-- нужные элементы (чтобы BST было корректным)
+arbitraryTreeInRange :: Int -> Int -> Size -> Gen (Tree Int)
+arbitraryTreeInRange minValue maxValue 0 = pure Empty
+arbitraryTreeInRange minValue maxValue size = do
+  value <- Gen.int (Range.linear minValue maxValue)
+  let leftRange = Range.linear minValue (value - 1)
+  let rightRange = Range.linear (value + 1) maxValue
+
+  leftSize <- Size <$> Gen.int (Range.linear 0 (unSize size - 1))
+  rightSize <- Size <$> Gen.int (Range.linear 0 (unSize size - 1))
+
+  leftSubtree <- if leftSize == 0
+                   then pure Nothing
+                   else Just <$> arbitraryTreeInRange minValue (value - 1) leftSize
+
+  rightSubtree <- if rightSize == 0
+                    then pure Nothing
+                    else Just <$> arbitraryTreeInRange (value + 1) maxValue rightSize
+
+  pure $ Node leftSubtree value rightSubtree
+
+treeGenInRange :: Gen (Tree Int)
+treeGenInRange = Gen.sized $ arbitraryTreeInRange 0 10000
+
 
 prop_bst :: Property
 prop_bst = property $ do
