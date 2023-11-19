@@ -121,4 +121,8 @@ test-suite hw2-test
     -- Test dependencies.
     build-depends:
         base ^>=4.17.0.0,
-        hw2
+        hw2,
+        tasty >=1.5,
+        tasty-hunit >=0.10,
+        tasty-hedgehog >=1.4,
+        hedgehog >=1.4
