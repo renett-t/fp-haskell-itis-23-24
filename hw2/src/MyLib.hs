@@ -37,7 +37,15 @@ insert v t@(Node ml root mr)
 -- левого и правого поворота деревьев
 -- (см. https://en.wikipedia.org/wiki/Red%E2%80%93black_tree)
 rotateLeft :: Tree a -> Tree a
-rotateLeft t = t
+rotateLeft Empty = Empty
+rotateLeft (Node maybeLeftSubtree value maybeRightSubtree) =
+  case maybeRightSubtree of
+    Nothing -> Empty
+    Just rightSubtree -> Node (Just rightSubtree) value maybeLeftSubtree
 
 rotateRight :: Tree a -> Tree a
-rotateRight t = t
+rotateRight Empty = Empty
+rotateRight (Node maybeLeftSubtree value maybeRightSubtree) =
+  case maybeLeftSubtree of
+    Nothing -> Empty
+    Just leftSubtree -> Node maybeRightSubtree value (Just leftSubtree)
