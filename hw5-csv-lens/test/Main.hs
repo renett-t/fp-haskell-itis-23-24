@@ -1,10 +1,26 @@
+module Main(main) where
+
 import CSVParser
 import Songs
 import ParsingDataRows
+import SongsFunctions
 
 import Test.Tasty
 import Test.Tasty.HUnit
 import Test.Tasty.Hedgehog
+
+main :: IO ()
+main = defaultMain tests
+
+tests :: TestTree
+tests = testGroup "All Tests"
+  [ testsPlainCSVParser
+  , testsForDataRowsAndAlbums
+  , testsForAlbumSearch
+  ]
+
+
+------------------------------
 
 testsPlainCSVParser :: TestTree
 testsPlainCSVParser = testGroup "CSV Parser Tests"
@@ -42,6 +58,8 @@ testsPlainCSVParser = testGroup "CSV Parser Tests"
 
   ]
 
+
+
 testsForDataRowsAndAlbums :: TestTree
 testsForDataRowsAndAlbums = testGroup "DataRows to Albums Tests"
   [ testCase "Convert [DataRow] to [Album] with correct [Track]" $
@@ -56,11 +74,15 @@ testsForDataRowsAndAlbums = testGroup "DataRows to Albums Tests"
       in assertEqual "Conversion from DataRow to Album" expectedAlbums actualAlbums
   ]
 
-tests :: TestTree
-tests = testGroup "All Tests"
-  [ testsPlainCSVParser
-  , testsForDataRowsAndAlbums
+
+
+testsForAlbumSearch :: TestTree
+testsForAlbumSearch = testGroup "Album Search Tests"
+  [ testCase "Find longest album by total duration" $ do
+      let albums = [Album "11" "Album 1" "2023-09-11" [Track "1" "Track 1" 300000, Track "2" "Track 2" 240000]
+                   , Album "12" "Album 2" "2023-12-01" [Track "3" "Track 3" 180000]]
+          expectedAlbum = AlbumDurationInfo (Album "11" "Album 1" "2023-09-11" [Track "1" "Track 1" 300000, Track "2" "Track 2" 240000]) 540000
+          actualAlbum = findLongestAlbum albums
+      assertEqual "Found longest album by total duration" (Just expectedAlbum) actualAlbum
   ]
 
-main :: IO ()
-main = defaultMain tests
