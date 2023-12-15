@@ -3,6 +3,7 @@
 module SongsFunctions where
 
 import Songs
+import Utils
 
 import Control.Lens
 import Data.Ord
@@ -56,3 +57,7 @@ findAlbumWithShortestTrack [] = Nothing
 findAlbumWithShortestTrack albums =
   Just $ minimumBy (comparing (minimum . map _duration . _albumTracks)) albums
 
+
+-- функция поиска альбомов по году
+findAlbumsByYear :: Int -> [Album] -> [Album]
+findAlbumsByYear targetYear = filter (\album -> maybe False (== targetYear) (parseYear (_albumReleaseDate album)))

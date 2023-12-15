@@ -94,7 +94,7 @@ testsForAlbumSearch = testGroup "Album Search Tests"
           albums = [album1, album2]
       in findAlbumWithLongestAverageDuration albums @?= Just album1
 
-  ,  testCase "Find album with shortest track" $
+  , testCase "Find album with shortest track" $
       let track1 = Track "1_1" "Track 1" 20000
           track2 = Track "1_2" "Track 2" 40000
           track3 = Track "2_1" "Track 3" 10000
@@ -102,4 +102,21 @@ testsForAlbumSearch = testGroup "Album Search Tests"
           album2 = Album "2" "Album 2" "2023-12-01" [track3]
           albums = [album1, album2]
       in findAlbumWithShortestTrack albums @?= Just album2
+
+  , testCase "Find albums released in a specific year" $
+      let album1 = Album "1" "Album 1" "2022-01-01" []
+          album2 = Album "2" "Album 2" "2023-02-15" []
+          album3 = Album "3" "Album 3" "2023-01-01" []
+          albums = [album1, album2, album3]
+          targetYear = 2023
+      in findAlbumsByYear targetYear albums @?= [album2, album3]
+
+  , testCase "Find albums released in a specific year returns returns an empty list if no albums were released in the given year" $
+      let album1 = Album "1" "Album 1" "2022-01-01" []
+          album2 = Album "2" "Album 2" "2023-02-15" []
+          album3 = Album "3" "Album 3" "2024-01-01" []
+          albums = [album1, album2, album3]
+          targetYear = 2025
+      in findAlbumsByYear targetYear albums @?= []
+
   ]
