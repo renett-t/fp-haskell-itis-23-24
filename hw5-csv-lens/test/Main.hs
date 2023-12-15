@@ -84,5 +84,14 @@ testsForAlbumSearch = testGroup "Album Search Tests"
           expectedAlbum = AlbumDurationInfo (Album "11" "Album 1" "2023-09-11" [Track "1" "Track 1" 300000, Track "2" "Track 2" 240000]) 540000
           actualAlbum = findLongestAlbum albums
       assertEqual "Found longest album by total duration" (Just expectedAlbum) actualAlbum
+
+  , testCase "Find album with longest average duration of it's tracks" $
+      let track1 = Track "1_1" "Track 1" 600000
+          track2 = Track "1_2" "Track 2" 500000
+          track3 = Track "2_1" "Track 3" 400000
+          album1 = Album "1" "Album 1" "2023-09-11" [track1, track2]
+          album2 = Album "2" "Album 2" "2023-12-01" [track3]
+          albums = [album1, album2]
+      in findAlbumWithLongestAverageDuration albums @?= Just album1
   ]
 

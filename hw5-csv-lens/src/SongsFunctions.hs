@@ -6,7 +6,7 @@ import Songs
 
 import Control.Lens
 import Data.Ord
-import Data.List (sortBy)
+import Data.List (sortBy, maximumBy)
 
 
 data AlbumDurationInfo = AlbumDurationInfo
@@ -18,6 +18,8 @@ data AlbumDurationInfo = AlbumDurationInfo
 makeLenses ''Track
 makeLenses ''Album
 
+
+-- функция поиска самого длинного альбома (по сумме длин песен);
 findLongestAlbum :: [Album] -> Maybe AlbumDurationInfo
 findLongestAlbum albums =
   case sortedAlbums of
@@ -27,3 +29,23 @@ findLongestAlbum albums =
     albumInfos = fmap (\album -> AlbumDurationInfo album (sumOf (albumTracks.traverse.duration) album)) albums
     -- Сортировка по убыванию длительности
     sortedAlbums = sortBy (comparing (Down . totalAlbumDuration)) albumInfos
+
+
+-- функция поиска альбома с наибольшей средней длиной песни;
+averageDurationHelper :: Album -> Double
+averageDurationHelper album =
+  let trackDurations = map (fromIntegral . _duration) (_albumTracks album)
+      totalDuration = sum trackDurations
+      numTracks = length trackDurations
+  in if numTracks == 0
+       then 0.0
+       else totalDuration / fromIntegral numTracks
+
+findAlbumWithLongestAverageDuration :: [Album] -> Maybe Album
+findAlbumWithLongestAverageDuration albums =
+  case albums of
+    [] -> Nothing
+    _ ->
+      let maxAlbum = maximumBy (comparing averageDurationHelper) albums
+      in Just maxAlbum
+
