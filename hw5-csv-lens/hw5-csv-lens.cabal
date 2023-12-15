@@ -1,0 +1,44 @@
+cabal-version:   3.8
+name:            hw5-csv-lens
+version:         0.1.0.0
+maintainer:      Regina Tiapkina
+author:          rtapkina@gmail.com
+build-type:      Simple
+extra-doc-files: CHANGELOG.md
+
+library
+    exposed-modules:  CSVParser
+    hs-source-dirs:   src
+    default-language: Haskell2010
+    ghc-options:      -Wall
+    build-depends:
+        base ^>=4.17.0.0,
+        megaparsec,
+        text >=2.0.1
+
+executable hw5-csv-lens
+    main-is:          Main.hs
+    hs-source-dirs:   app
+    default-language: Haskell2010
+    ghc-options:      -Wall
+    build-depends:
+        base ^>=4.17.0.0,
+        hw5-csv-lens,
+        megaparsec >=3.1,
+        text >=2.0.1
+
+test-suite hw5-csv-lens-test
+    type:             exitcode-stdio-1.0
+    main-is:          Main.hs
+    hs-source-dirs:   test
+    default-language: Haskell2010
+    ghc-options:      -Wall
+    build-depends:
+        base ^>=4.17.0.0,
+        hw5-csv-lens,
+        megaparsec,
+        text >=2.0.1,
+        tasty >=1.5,
+        tasty-hunit >=0.10,
+        tasty-hedgehog >=1.4,
+        hedgehog >=1.4
