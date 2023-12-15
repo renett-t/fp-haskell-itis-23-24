@@ -6,7 +6,7 @@ import Songs
 
 import Control.Lens
 import Data.Ord
-import Data.List (sortBy, maximumBy)
+import Data.List (sortBy, maximumBy, minimumBy)
 
 
 data AlbumDurationInfo = AlbumDurationInfo
@@ -48,4 +48,11 @@ findAlbumWithLongestAverageDuration albums =
     _ ->
       let maxAlbum = maximumBy (comparing averageDurationHelper) albums
       in Just maxAlbum
+
+
+-- функция поиска самого короткого альбома;
+findAlbumWithShortestTrack :: [Album] -> Maybe Album
+findAlbumWithShortestTrack [] = Nothing
+findAlbumWithShortestTrack albums =
+  Just $ minimumBy (comparing (minimum . map _duration . _albumTracks)) albums
 

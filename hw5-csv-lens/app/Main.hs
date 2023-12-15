@@ -39,14 +39,28 @@ main = do
 -- main :: IO ()
 -- main = do
 --   let albums = [
---         Album "11" "Album 1" "2023-09-11" [Track "1" "Track 1" 300000, Track "2" "Track 2" 240000]
---         , Album "12" "Album 2" "2023-12-01" [Track "3" "Track 3" 180000]
---         , Album "13" "Album 3" "2024-12-01" [Track "4" "Track 4" 18000]
+--         Album "1" "Album 1" "2023-09-11" [Track "1" "Track 1" 300000, Track "2" "Track 2" 240000]
+--         , Album "1" "Album 2" "2023-12-01" [Track "3" "Track 3" 180000]
+--         , Album "1" "Album 3" "2024-12-01" [Track "4" "Track 4" 18000]
 --         ]
 
 --   case findAlbumWithLongestAverageDuration albums of
 --     Just album -> do
 --       putStrLn "Result of findAlbumWithLongestAverageDuration: "
+--       print album
+--     Nothing -> putStrLn "No albums found"
+
+-- main :: IO ()
+-- main = do
+--   let albums = [
+--         Album "11" "Album 1" "2023-09-11" [Track "1" "Track 1" 300000, Track "2" "Track 2" 240000]
+--         , Album "12" "Album 2" "2023-12-01" [Track "3" "Track 3" 180000]
+--         , Album "13" "Album 3" "2024-12-01" [Track "4" "Track 4" 18000]
+--         ]
+
+--   case findAlbumWithShortestTrack albums of
+--     Just album -> do
+--       putStrLn "Result of findAlbumWithShortestTrack: "
 --       print album
 --     Nothing -> putStrLn "No albums found"
 

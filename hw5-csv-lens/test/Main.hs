@@ -93,5 +93,13 @@ testsForAlbumSearch = testGroup "Album Search Tests"
           album2 = Album "2" "Album 2" "2023-12-01" [track3]
           albums = [album1, album2]
       in findAlbumWithLongestAverageDuration albums @?= Just album1
-  ]
 
+  ,  testCase "Find album with shortest track" $
+      let track1 = Track "1_1" "Track 1" 20000
+          track2 = Track "1_2" "Track 2" 40000
+          track3 = Track "2_1" "Track 3" 10000
+          album1 = Album "1" "Album 1" "2023-09-11" [track1, track2]
+          album2 = Album "2" "Album 2" "2023-12-01" [track3]
+          albums = [album1, album2]
+      in findAlbumWithShortestTrack albums @?= Just album2
+  ]
