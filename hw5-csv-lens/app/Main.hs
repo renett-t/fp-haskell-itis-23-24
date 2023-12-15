@@ -5,6 +5,7 @@ module Main where
 import CSVParser
 import Songs
 import ParsingDataRows
+import SongsFunctions
 
 import Text.Megaparsec (errorBundlePretty)
 
@@ -21,3 +22,16 @@ main = do
       putStrLn "Data Rows:"
       let dataRows = filterValidDataRows (map dataRowParser (rows csv))
       mapM_ print dataRows
+
+
+-- main :: IO ()
+-- main = do
+--   let albums = [Album "11" "Album 1" "2023-09-11" [Track "1" "Track 1" 300000, Track "2" "Track 2" 240000]
+--                    , Album "12" "Album 2" "2023-12-01" [Track "3" "Track 3" 180000]]
+          
+--   case findLongestAlbum albums of
+--     Just longestAlbum -> do
+--       putStrLn "!! Found the longest album: "
+--       print longestAlbum
+--     Nothing -> putStrLn "No albums found"
+
