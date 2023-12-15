@@ -1,13 +1,13 @@
-{-# LANGUAGE OverloadedStrings #-}
-
 import CSVParser
+import Songs
+import ParsingDataRows
 
 import Test.Tasty
 import Test.Tasty.HUnit
 import Test.Tasty.Hedgehog
 
-main :: IO ()
-main = defaultMain $ testGroup "CSV Parser Tests"
+testsPlainCSVParser :: TestTree
+testsPlainCSVParser = testGroup "CSV Parser Tests"
   [ testGroup "HUnit Tests"
     [ testCase "Can parse using different delimiters and produce the same result" $
         let exampleCSV1 = "Name,Age,Hobby\nRegina,21,Guitar\nNastya,22,Dance\nAdil,22,Guitar\n"
@@ -41,3 +41,26 @@ main = defaultMain $ testGroup "CSV Parser Tests"
     ]
 
   ]
+
+testsForDataRowsAndAlbums :: TestTree
+testsForDataRowsAndAlbums = testGroup "DataRows to Albums Tests"
+  [ testCase "Convert [DataRow] to [Album] with correct [Track]" $
+      let dataRows = [DataRow "1" "Track 1" "11" "Album 1" "2023-09-11" 300000
+                     , DataRow "2" "Track 2" "11" "Album 1" "2023-09-11" 240000
+                     , DataRow "3" "Track 3" "12" "Album 2" "2023-12-01" 180000]
+
+          expectedAlbums = [Album "11" "Album 1" "2023-09-11" [Track "1" "Track 1" 300000, Track "2" "Track 2" 240000]
+                           , Album "12" "Album 2" "2023-12-01" [Track "3" "Track 3" 180000]]
+
+          actualAlbums = dataRowsToAlbums dataRows
+      in assertEqual "Conversion from DataRow to Album" expectedAlbums actualAlbums
+  ]
+
+tests :: TestTree
+tests = testGroup "All Tests"
+  [ testsPlainCSVParser
+  , testsForDataRowsAndAlbums
+  ]
+
+main :: IO ()
+main = defaultMain tests

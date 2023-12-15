@@ -3,36 +3,10 @@
 module Main where
 
 import CSVParser
+import Songs
+import ParsingDataRows
 
-import Text.Megaparsec
-import Data.Either (rights)
-import Text.Megaparsec.Char
-import Control.Monad (void)
-import Data.Void
-
-data DataRow = DataRow
-  { trackId :: String
-  , trackName :: String
-  , trackAlbumId :: String
-  , trackAlbumName :: String
-  , trackAlbumReleaseDate :: String
-  , trackDuration :: Int
-  }
-  deriving (Show, Eq)
-
-dataRowParser :: [String] -> Either String DataRow
-dataRowParser columns =
-  case columns of
-    [trackId, trackName, _, _, trackAlbumId, trackAlbumName, trackAlbumReleaseDate, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, duration] ->
-      Right $ DataRow trackId trackName trackAlbumId trackAlbumName trackAlbumReleaseDate (read duration :: Int)
-    _ -> Left "Invalid number of columns"
-
--- Пытаемся превратить наш CSV в список DataRow
-csvRowsToDataRows :: [[String]] -> [Either String DataRow]
-csvRowsToDataRows rows = map dataRowParser rows
-
-filterValidDataRows :: [Either String DataRow] -> [DataRow]
-filterValidDataRows = rights
+import Text.Megaparsec (errorBundlePretty)
 
 main :: IO ()
 main = do
