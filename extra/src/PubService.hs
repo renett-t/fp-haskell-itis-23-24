@@ -15,7 +15,7 @@ import Debug.Trace (trace)
 -- sorry for too much trace statements ;D
 readData :: IO [Pub]
 readData = do
-  let filePath = "open_pubs.csv"
+  let filePath = "./assets/open_pubs.csv"
       delimiter = ","
       settings = CSVParsingSettings delimiter
 
