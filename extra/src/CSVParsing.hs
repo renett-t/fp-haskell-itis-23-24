@@ -4,11 +4,13 @@ import Text.Parsec
 import Text.Parsec.String (Parser)
 import Debug.Trace (trace, traceShow)
 
+
 data CSV = CSV { rows :: [[String]] }
   deriving (Show, Eq)
 
 data CSVParsingSettings = CSVParsingSettings
   { delimiter :: String }
+
 
 csvCell :: String -> Parser String
 csvCell del = quotedCell <|> nonQuotedCell
@@ -45,6 +47,7 @@ eol =   try (string "\n\r")
     <|> string "\r"
     <?> "end of line"
 
--- input is a String representatioin of given file
+
+-- Parsing csv string (from file) into CSV instance
 parseCSV :: CSVParsingSettings -> String -> Either ParseError CSV
 parseCSV settings = parse (csvFile settings) "(unknown)"

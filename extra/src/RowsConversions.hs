@@ -19,7 +19,7 @@ data Row = Row
     town     :: String
   } deriving (Show, Eq)
 
--- Converting a list of strings from CSV row to a Row instance
+
 parseRow :: [String] -> Either String Row
 parseRow [idStr, fsa, name, address, postcode, eastingStr, northingStr, latStr, lonStr, town] =
   Row <$> parseInt idStr <*> pure fsa <*> pure name <*> pure address <*> pure postcode
@@ -38,7 +38,6 @@ parseDouble str = case reads str of
   _         -> Left $ "Failed to parse Double: " ++ str
 
 
--- Converting a Row instance to a Pub instance
 convertRowToPub :: Row -> Pub
 convertRowToPub row = Pub
   { uid     = _uid row
@@ -47,7 +46,6 @@ convertRowToPub row = Pub
   }
 
 
--- Converting CSV into [Row]
 csvRowsToDataRows :: [[String]] -> [Either String Row]
 csvRowsToDataRows rows = map parseRow rows
 

@@ -1,5 +1,6 @@
 module PubDomain where
 
+
 data GeoLocation = GeoLocation
   {
     lat      :: Double
