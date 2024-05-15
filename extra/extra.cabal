@@ -1,0 +1,61 @@
+cabal-version:      3.8
+name:               extra
+version:            0.1.0.0
+
+-- synopsis:
+-- description:
+
+license:            NONE
+
+author:             rtapkina@gmail.com
+maintainer:         Regina Tiapkina
+
+-- copyright:
+
+build-type:         Simple
+
+extra-doc-files:    CHANGELOG.md
+
+-- extra-source-files:
+
+common warnings
+    ghc-options: -Wall
+
+library
+    import:           warnings
+    exposed-modules:
+        CSVParsing
+
+    hs-source-dirs:   src
+    default-language: Haskell2010
+    ghc-options: -Wall
+    default-extensions: OverloadedStrings, TemplateHaskell
+    build-depends:
+        base ^>=4.17.0.0,
+        parsec ^>=3.1.15.0,
+        text >=2.0.1,
+
+executable extra
+    import:           warnings
+    main-is:          Main.hs
+    hs-source-dirs:   app
+    default-language: Haskell2010
+    ghc-options:      -Wall
+    build-depends:
+        base ^>=4.17.0.0,
+        extra,
+
+test-suite extra-test
+    type:             exitcode-stdio-1.0
+    main-is:          Main.hs
+    hs-source-dirs:   test
+    default-language: Haskell2010
+    ghc-options:      -Wall
+    build-depends:
+        base ^>=4.17.0.0,
+        extra,
+        text >=2.0.1,
+        tasty >=1.5,
+        tasty-hunit >=0.10,
+        tasty-hedgehog >=1.4,
+        hedgehog >=1.4
