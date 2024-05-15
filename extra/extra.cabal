@@ -37,7 +37,6 @@ library
     build-depends:
         base ^>=4.17.0.0,
         parsec ^>=3.1.15.0,
-        text >=2.0.1,
 
 executable extra
     import:           warnings
@@ -58,8 +57,6 @@ test-suite extra-test
     build-depends:
         base ^>=4.17.0.0,
         extra,
-        text >=2.0.1,
         tasty >=1.5,
         tasty-hunit >=0.10,
         tasty-hedgehog >=1.4,
-        hedgehog >=1.4
