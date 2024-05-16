@@ -45,7 +45,6 @@ eol =   try (string "\n\r")
     <|> try (string "\r\n")
     <|> string "\n"
     <|> string "\r"
-    <?> "end of line"
 
 
 -- Parsing csv string (from file) into CSV instance
